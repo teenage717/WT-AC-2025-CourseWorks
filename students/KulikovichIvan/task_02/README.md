@@ -69,7 +69,6 @@ docker-compose ps
 ### Docker (рекомендуется)
 
 ```yaml
-# docker-compose.yml
 version: '3.8'
 
 services:
@@ -124,25 +123,18 @@ volumes:
 ### Ручная установка
 
 ```bash
-# Бэкенд
 cd backend
 python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# venv\Scripts\activate   # Windows
+source venv/bin/activate  
 
 pip install -r requirements.txt
 
-# Настройка окружения
 cp .env.example .env
-# Отредактируйте .env файл
 
-# Запуск миграций
 alembic upgrade head
 
-# Запуск сервера
 uvicorn main\:app --reload --host 0.0.0.0 --port 8000
 
-# Фронтенд (в другом терминале)
 cd frontend
 npm install
 npm run serve
@@ -298,7 +290,6 @@ MAX_FILE_SIZE_MB=10
 
 import requests
 
-# 1. Аутентификация
 response = requests.post("http://localhost:8000/login", json={
     "email": "teacher@university.edu",
     "password": "teacher123"
@@ -307,7 +298,6 @@ token = response.json()["access_token"]
 
 headers = {"Authorization": f"Bearer {token}"}
 
-# 2. Создание квиза
 quiz_data = {
     "title": "Основы Python",
     "description": "Введение в программирование на Python",
@@ -339,22 +329,16 @@ print(f"Квиз создан: {response.json()['id']}")
 ## 🧪 Тестирование
 
 ```bash
-# Установка тестовых зависимостей
 pip install -r requirements-test.txt
 
-# Запуск всех тестов
 pytest -v
 
-# Запуск с покрытием кода
 pytest --cov=app --cov-report=html
 
-# Тесты API
 pytest tests/test_api.py -v
 
-# Тесты аутентификации
 pytest tests/test_auth.py -v
 
-# Тесты производительности
 locust -f tests/load_test.py
 ```
 
@@ -365,10 +349,8 @@ locust -f tests/load_test.py
 ### Сборка Docker образа
 
 ```bash
-# Бэкенд
 docker build -t quiz-platform-backend\:latest .
 
-# Фронтенд
 docker build -t quiz-platform-frontend\:latest -f frontend/Dockerfile .
 ```
 
@@ -381,7 +363,6 @@ kubectl apply -f k8s/
 ### Kubernetes манифесты
 
 ```yaml
-# deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -434,7 +415,6 @@ spec:
 ### Prometheus метрики
 
 ```bash
-# Эндпоинт метрик
 GET /metrics
 
 ```

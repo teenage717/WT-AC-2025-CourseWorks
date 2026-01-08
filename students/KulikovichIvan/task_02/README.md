@@ -434,6 +434,7 @@ spec:
 ### Prometheus метрики
 
 ```bash
+# Эндпоинт метрик
 GET /metrics
 
 ```
